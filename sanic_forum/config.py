@@ -1,5 +1,3 @@
-from base64 import b64decode as b64decode
-
 from sanic.config import Config as SanicConfig
 
 from .__version__ import VERSION
@@ -14,8 +12,6 @@ class Config(SanicConfig):
     DATABASE_URL: str
     DEBUG: bool
     ENVIRONMENT: str = "production"
-    JWT_AUDIENCE: str
-    JWT_ISSUER: str
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

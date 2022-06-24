@@ -1,3 +1,2 @@
 APP_NAME = __package__
 ENV_PREFIX = "SANIC_FORUM_"
-JWT_ALGORITHM = "HS512"

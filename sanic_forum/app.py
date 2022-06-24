@@ -12,9 +12,9 @@ from sanic_forum.constants import APP_NAME, ENV_PREFIX
 
 DEFAULT_MODULES = (
     "sanic_forum.blueprints",
-    "sanic_forum.database",
-    "sanic_forum.security",  # Must be BEFORE extensions. See note in security/__init__.py.
+    "sanic_forum.security",  # Must be BEFORE extensions.
     "sanic_forum.extensions",
+    "sanic_forum.database",
 )
 
 

@@ -1,5 +1,5 @@
 from sanic import Blueprint
 
-from . import ping
+from . import users
 
-bp = Blueprint.group(ping.bp, version=1)
+bp = Blueprint.group(users.bp, version=1)

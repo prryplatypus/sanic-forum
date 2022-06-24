@@ -1,20 +1,19 @@
 from __future__ import annotations
 
-from databases import Database
+from mayim import Mayim
 
 from sanic_forum.app import App
 from sanic_forum.constants import APP_NAME
 
 
 app = App.get_app(APP_NAME)
-pool = Database(app.config.DATABASE_URL)
 
 
 @app.before_server_start
 async def connect_database(*_):
-    await pool.connect()
+    app.ctx.mayim = Mayim(dsn=app.config.DATABASE_URL)
 
 
-@app.after_server_stop
-async def disconnect_database(*_):
-    await pool.disconnect()
+# @app.after_server_stop
+# async def disconnect_database(*_):
+#     await pool.disconnect()
