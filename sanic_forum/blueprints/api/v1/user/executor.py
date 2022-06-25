@@ -2,7 +2,7 @@ from typing import List
 
 from mayim import PostgresExecutor, register
 
-from .model import User
+from sanic_forum.database.models import User
 
 
 @register

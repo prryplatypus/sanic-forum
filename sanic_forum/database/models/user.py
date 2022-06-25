@@ -1,7 +1,9 @@
 from uuid import UUID
 
+from .__base__ import BaseModel
 
-class User(object):
+
+class User(BaseModel):
     def __init__(self, *, id: UUID, username: str) -> None:
         self.id = id
         self.username = username
