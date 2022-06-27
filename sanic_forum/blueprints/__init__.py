@@ -1,3 +1,6 @@
-from .api import bp
+from . import api
+from sanic_forum.app import App
 
-__all__ = ("bp",)
+
+def setup(app: App):
+    app.blueprint(api.bp)

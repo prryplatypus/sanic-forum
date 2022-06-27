@@ -5,6 +5,7 @@ from typing import Optional, Sequence, cast
 
 from sanic import Sanic
 from sanic.exceptions import SanicException
+from sanic_ext import Extend
 
 import sanic_forum.config as config
 import sanic_forum.request as request
@@ -12,14 +13,17 @@ from sanic_forum.constants import APP_NAME, ENV_PREFIX
 
 DEFAULT_MODULES = (
     "sanic_forum.blueprints",
-    "sanic_forum.security",  # Must be BEFORE extensions.
-    "sanic_forum.extensions",
     "sanic_forum.database",
+    # ↓ Order of these 3 matters
+    "sanic_forum.security",  # Must be BEFORE extensions (see its __init__.py)
+    "sanic_forum.extensions",
+    "sanic_forum.pagination",
 )
 
 
 class App(Sanic):
     config: config.Config
+    ext: Extend
     request: request.Request
 
     @classmethod
@@ -45,7 +49,8 @@ def create(module_names: Optional[Sequence[str]] = None) -> App:
 
     for module_name in module_names:
         module = import_module(module_name)
-        if bp := getattr(module, "bp", None):
-            app.blueprint(bp)
+
+        if setup := getattr(module, "setup", None):
+            setup(app)
 
     return app

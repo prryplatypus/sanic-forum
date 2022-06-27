@@ -12,10 +12,12 @@ from . import authentication
 
 app = App.get_app(APP_NAME)
 
-# We do it with this signal to ensure it happens
-# before injecting any parameters. This will only
-# work if this module is initialised before the
-# extensions/injections.
-@app.signal(Event.HTTP_ROUTING_AFTER)
-async def _(request: Request, handler: Callable, **_):
-    await authentication.check(request, handler)
+
+def setup(app: App):
+    # We do it with this signal to ensure it happens
+    # before injecting any parameters. This will only
+    # work if this module is initialised before the
+    # extensions/injections.
+    @app.signal(Event.HTTP_ROUTING_AFTER)
+    async def setup_authentication(request: Request, handler: Callable, **_):
+        await authentication.check(request, handler)

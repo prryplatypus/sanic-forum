@@ -7,5 +7,5 @@ from sanic_forum.database.models import User
 
 @register
 class UserExecutor(PostgresExecutor):
-    async def select_all_users(self) -> List[User]:
+    async def select_all_users(self, limit: int, offset: int) -> List[User]:
         ...
