@@ -20,7 +20,7 @@ with open_local(["sanic_forum", "__version__.py"], encoding="latin1") as fp:
         raise RuntimeError("Unable to determine version.")
 
 
-INSTALL_REQUIRES = ['yoyo-migrations', ]
+INSTALL_REQUIRES = ['yoyo-migrations', 'psycopg2', ]
 DEV_REQUIRES = INSTALL_REQUIRES + [
     'black',
     'flake8',

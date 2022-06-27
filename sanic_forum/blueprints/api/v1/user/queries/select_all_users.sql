@@ -1,1 +1,1 @@
-SELECT id, username FROM public.users;
+SELECT id, username FROM auth.users;
