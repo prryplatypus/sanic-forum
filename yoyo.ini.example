@@ -1,0 +1,8 @@
+[DEFAULT]
+
+# List of migration source directories. "%(here)s" is expanded to the
+# full path of the directory containing this ini file.
+sources = %(here)s/sanic_forum/database/migrations
+
+# Target database
+database = postgresql://user:pass@host:port/database
