@@ -11,7 +11,7 @@ class Config(SanicConfig):
 
     DATABASE_URL: str
     DEBUG: bool
-    ENVIRONMENT: str = "production"
+    ENVIRONMENT: str
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
