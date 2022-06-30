@@ -19,7 +19,7 @@ async def list_all_users(_: Request, pagination: Pagination) -> HTTPResponse:
     users = await executor.select_all_users(
         pagination.limit, pagination.offset
     )
-    return json([user.as_dict() for user in users])
+    return json([user.to_dict() for user in users])
 
 
 @bp.post("")
@@ -36,4 +36,4 @@ async def create_user(_: Request, body: CreateUserRequest) -> HTTPResponse:
 
     user = await executor.insert_user(body.username)
 
-    return json(user.as_dict())
+    return json(user.to_dict())

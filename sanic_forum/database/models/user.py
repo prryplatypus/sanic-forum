@@ -8,7 +8,7 @@ class User(BaseModel):
         self.id = id
         self.username = username
 
-    def as_dict(self) -> dict:
+    def to_dict(self) -> dict:
         return {
             "id": str(self.id),
             "username": self.username,
