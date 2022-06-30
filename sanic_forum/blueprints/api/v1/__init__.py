@@ -1,5 +1,5 @@
 from sanic import Blueprint
 
-from . import user
+from . import users
 
-bp = Blueprint.group(user.bp, version=1)
+bp = Blueprint.group(users.bp, version=1)
