@@ -7,7 +7,7 @@ from sanic_forum.database.models import User
 
 @pytest.fixture
 def user():
-    return User(id=uuid.uuid4(), username="test")
+    return User(id=uuid.uuid4(), username="prryplatypus")
 
 
 @pytest.fixture
