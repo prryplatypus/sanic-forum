@@ -10,6 +10,17 @@ def request_body(user):
     }
 
 
+def test_executor_is_not_used_with_invalid_request(bp_testing_app, mayim):
+    with patch(
+        "sanic_forum.blueprints.api.v1.users.blueprint.Mayim", mayim
+    ):
+        data = {"invalid_field": "abcdefg"}
+        bp_testing_app.test_client.post(
+            "/api/v1/users", json=data
+        )
+    mayim.get.assert_not_called()
+
+
 def test_correct_executor_is_requested(bp_testing_app, mayim, user):
     with patch(
         "sanic_forum.blueprints.api.v1.users.blueprint.Mayim", mayim
