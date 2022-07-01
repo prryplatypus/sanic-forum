@@ -1,12 +1,14 @@
 from unittest.mock import patch
 
+from sanic_forum.blueprints.api.v1.users.executor import UserExecutor
 
-def test_users_can_be_listed(bp_testing_app, mayim, user):
+
+def test_correct_executor_is_requested(bp_testing_app, mayim):
     with patch(
         "sanic_forum.blueprints.api.v1.users.blueprint.Mayim", mayim
     ):
-        _, resp = bp_testing_app.test_client.get("/api/v1/users")
-    assert resp.json == [user.to_dict()]
+        bp_testing_app.test_client.get("/api/v1/users")
+    mayim.get.assert_called_once_with(UserExecutor)
 
 
 def test_executor_is_called_with_expected_parameters(
