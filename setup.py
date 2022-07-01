@@ -35,7 +35,6 @@ setup(
     author_email='github@prryplatypus.dev',
     packages=find_packages(),
     install_requires=[
-        'cerberus',  # Validation
         'mayim[postgres]',  # Database
         'sanic',
         'sanic-ext',
