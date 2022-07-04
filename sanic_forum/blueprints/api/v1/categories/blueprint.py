@@ -37,6 +37,10 @@ async def create_category(
     else:
         raise InvalidUsage("Name is already in use")
 
+    await executor.update_categories_display_order_for_insert(
+        body.parent_category_id, body.display_order
+    )
+
     category = await executor.insert_category(
         body.parent_category_id, body.name, body.display_order
     )

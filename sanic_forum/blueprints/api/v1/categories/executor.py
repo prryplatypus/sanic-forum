@@ -20,3 +20,8 @@ class CategoryExecutor(PostgresExecutor):
         self, parent_category_id: Optional[UUID], name: str
     ) -> Category:
         ...
+
+    async def update_categories_display_order_for_insert(
+        self, parent_category_id: Optional[UUID], display_order: int
+    ) -> None:
+        ...
