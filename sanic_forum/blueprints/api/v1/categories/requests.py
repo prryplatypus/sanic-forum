@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 from uuid import UUID
 
 from sanic.exceptions import InvalidUsage
@@ -7,7 +6,7 @@ from sanic.exceptions import InvalidUsage
 
 @dataclass
 class CreateCategoryRequest:
-    parent_category_id: Optional[UUID]
+    parent_category_id: UUID
     name: str
     display_order: int
 

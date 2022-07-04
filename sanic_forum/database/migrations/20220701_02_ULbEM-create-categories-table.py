@@ -14,7 +14,10 @@ CREATE TABLE forum.categories(
     display_order SMALLINT NOT NULL,
     CONSTRAINT pk_category PRIMARY KEY (id),
     CONSTRAINT fk_category_parent_category_id FOREIGN KEY (parent_category_id)
-        REFERENCES forum.categories(id)
+        REFERENCES forum.categories(id),
+    CONSTRAINT uk_category_name UNIQUE (parent_category_id, name),
+    CONSTRAINT uk_category_display_order
+        UNIQUE (parent_category_id, display_order)
 )
 """
 
@@ -24,49 +27,13 @@ DROP TABLE forum.categories
 
 steps = [
     step(MIGRATE, ROLLBACK),
-    # UNIQUE (parent_category_id, name) IF parent_category_id IS NOT NULL
     step(
         """
-        CREATE UNIQUE INDEX uk_category_name_with_parent
-        ON forum.categories (parent_category_id, name)
-        WHERE parent_category_id IS NOT NULL
+        INSERT INTO forum.categories(name, display_order) VALUES ('root', 0)
         """,
         """
-        DROP INDEX forum.uk_category_name_with_parent
-        """
-    ),
-    # UNIQUE (name) IF parent_category_id IS NULL
-    step(
-        """
-        CREATE UNIQUE INDEX uk_category_name_without_parent
-        ON forum.categories (name)
-        WHERE parent_category_id IS NULL
-        """,
-        """
-        DROP INDEX forum.uk_category_name_without_parent
-        """
-    ),
-    # UNIQUE (parent_category_id, display_order)
-    # IF parent_category_id IS NOT NULL
-    step(
-        """
-        CREATE UNIQUE INDEX uk_category_display_order_with_parent
-        ON forum.categories (parent_category_id, display_order)
-        WHERE parent_category_id IS NOT NULL
-        """,
-        """
-        DROP INDEX forum.uk_category_display_order_with_parent
-        """
-    ),
-    # UNIQUE (display_order) IF parent_category_id IS NULL
-    step(
-        """
-        CREATE UNIQUE INDEX uk_category_display_order_without_parent
-        ON forum.categories (display_order)
-        WHERE parent_category_id IS NULL
-        """,
-        """
-        DROP INDEX forum.uk_category_display_order_without_parent
+        DELETE FROM forum.categories
+        WHERE parent_category_id IS NULL AND name = 'root'
         """
     )
 ]

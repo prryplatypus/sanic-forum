@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from uuid import UUID
 
 from mayim import PostgresExecutor, register
@@ -9,7 +9,7 @@ from sanic_forum.database.models import Category
 @register
 class CategoryExecutor(PostgresExecutor):
     async def insert_category(
-        self, parent_category_id: Optional[UUID], name: str, display_order: int
+        self, parent_category_id: UUID, name: str, display_order: int
     ) -> Category:
         ...
 
@@ -17,11 +17,11 @@ class CategoryExecutor(PostgresExecutor):
         ...
 
     async def select_category_by_name(
-        self, parent_category_id: Optional[UUID], name: str
+        self, parent_category_id: UUID, name: str
     ) -> Category:
         ...
 
     async def update_categories_display_order_for_insert(
-        self, parent_category_id: Optional[UUID], display_order: int
+        self, parent_category_id: UUID, display_order: int
     ) -> None:
         ...
