@@ -9,7 +9,7 @@ def test_users_can_be_listed(bp_testing_app, mayim, category_executor):
 
     category_dicts = [
         user.to_dict()
-        for user in category_executor.select_all_categories.return_value
+        for user in category_executor.select_all.return_value
     ]
 
     assert resp.json == category_dicts

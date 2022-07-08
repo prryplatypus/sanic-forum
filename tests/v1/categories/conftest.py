@@ -28,7 +28,7 @@ def category(root_category):
 @pytest.fixture
 def category_executor(root_category, category):
     executor = Mock()
-    executor.select_all_categories = AsyncMock(
+    executor.select_all = AsyncMock(
         return_value=[root_category, category]
     )
     return executor
