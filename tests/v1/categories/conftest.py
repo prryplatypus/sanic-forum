@@ -34,7 +34,7 @@ def category_executor(root_category, category):
     executor.select_bool_by_id = AsyncMock(return_value=True)
     executor.select_bool_by_name = AsyncMock(return_value=False)
     executor.update_for_insert = AsyncMock()
-    executor.create_and_return = AsyncMock(return_value=category)
+    executor.insert_and_return = AsyncMock(return_value=category)
     return executor
 
 
