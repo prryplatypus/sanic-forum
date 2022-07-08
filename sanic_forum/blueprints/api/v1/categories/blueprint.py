@@ -30,13 +30,13 @@ async def create_category(
         raise BadRequest("Unknown parent category")
 
     qargs = (body.parent_category_id, body.name)
-    if (await executor.select_bool_by_name(*qargs)):
+    if await executor.select_bool_by_name(*qargs):
         raise BadRequest("Name is already in use")
 
     qargs = (body.parent_category_id, body.display_order)
     await executor.update_for_insert(*qargs)
 
     qargs = (body.parent_category_id, body.name, body.display_order)
-    category = await executor.create_and_return(*qargs)
+    category = await executor.insert_and_return(*qargs)
 
     return json(category.to_dict())
