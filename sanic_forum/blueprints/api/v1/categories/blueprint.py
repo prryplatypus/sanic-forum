@@ -25,10 +25,12 @@ async def create_category(
 ) -> HTTPResponse:
     executor = Mayim.get(CategoryExecutor)
 
-    # TODO: Check if parent exists
+    qargs = (body.parent_category_id,)
+    if not (await executor.select_bool_by_id(*qargs)):
+        raise BadRequest("Unknown parent category")
 
     qargs = (body.parent_category_id, body.name)
-    if await executor.select_bool_by_name(*qargs):
+    if (await executor.select_bool_by_name(*qargs)):
         raise BadRequest("Name is already in use")
 
     qargs = (body.parent_category_id, body.display_order)

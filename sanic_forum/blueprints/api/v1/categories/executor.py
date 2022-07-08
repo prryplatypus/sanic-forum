@@ -16,6 +16,9 @@ class CategoryExecutor(PostgresExecutor):
     async def select_all(self) -> List[Category]:
         ...
 
+    async def select_bool_by_id(self, id: UUID) -> bool:
+        ...
+
     async def select_bool_by_name(
         self, parent_category_id: UUID, name: str
     ) -> bool:
