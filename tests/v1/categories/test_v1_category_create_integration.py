@@ -1,3 +1,4 @@
+import pytest
 from unittest.mock import patch
 
 
@@ -28,6 +29,38 @@ def test_known_parameters_are_accepted(bp_testing_app, mayim, root_category):
         )
 
     assert resp.status == 200
+
+
+@pytest.mark.parametrize(
+    "name,val,expected",
+    [
+        ("name", "a" * 4, 400),
+        ("name", "a" * 5, 200),
+        ("name", "a" * 250, 200),
+        ("name", "a" * 251, 400),
+        ("display_order", -1, 400),
+        ("display_order", 0, 200),
+    ]
+)
+def test_parameter_limits(
+    bp_testing_app, mayim, root_category, name, val, expected
+):
+    with patch(
+        "sanic_forum.blueprints.api.v1.categories.blueprint.Mayim", mayim
+    ):
+        data = {
+            "parent_category_id": str(root_category.id),
+            "name": "Test Category",
+            "display_order": 0,
+        }
+
+        data.update({name: val})
+
+        _, resp = bp_testing_app.test_client.post(
+            "/api/v1/categories", json=data
+        )
+
+    assert resp.status == expected
 
 
 def test_unknown_parent_category_raises_bad_request(
