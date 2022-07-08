@@ -1,14 +1,6 @@
 from unittest.mock import patch
 
 
-def request_body(parent_id):
-    return {
-        "parent_category_id": parent_id,
-        "name": "Test Category",
-        "display_order": 0,
-    }
-
-
 def test_unknown_parameters_raise_bad_request_error(bp_testing_app, mayim):
     with patch(
         "sanic_forum.blueprints.api.v1.categories.blueprint.Mayim", mayim
