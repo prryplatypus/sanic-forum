@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from uuid import UUID
 
-from sanic.exceptions import InvalidUsage
+from sanic.exceptions import BadRequest
 
 
 @dataclass
 class CreateCategoryRequest:
-    parent_category_id: UUID
+    parent_category_id: str
     name: str
     display_order: int
 
@@ -14,7 +14,12 @@ class CreateCategoryRequest:
         name_len = len(self.name)
 
         if name_len < 5 or name_len > 250:
-            raise InvalidUsage("Name must be between 5 and 250 characters")
+            raise BadRequest("Name must be between 5 and 250 characters")
 
         if self.display_order < 0:
-            raise InvalidUsage("Display order must be a positive integer")
+            raise BadRequest("Display order must be a positive integer")
+
+        try:
+            UUID(self.parent_category_id)
+        except ValueError:
+            raise BadRequest("Parent category id must be a UUID")
