@@ -14,7 +14,7 @@ CREATE TABLE forum.categories(
     display_order SMALLINT NOT NULL,
     CONSTRAINT pk_category PRIMARY KEY (id),
     CONSTRAINT fk_category_parent_category_id FOREIGN KEY (parent_category_id)
-        REFERENCES forum.categories(id),
+        REFERENCES forum.categories(id) ON DELETE CASCADE,
     CONSTRAINT uk_category_name UNIQUE (parent_category_id, name),
     CONSTRAINT uk_category_display_order
         UNIQUE (parent_category_id, display_order)
